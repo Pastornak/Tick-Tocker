@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "99595547974",
+    "firebase_url": "https://tick-tocker-3596d.firebaseio.com",
+    "project_id": "tick-tocker-3596d",
+    "storage_bucket": "tick-tocker-3596d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99595547974:android:eb727d217046882a",
+        "android_client_info": {
+          "package_name": "com.flashpoint.ticktocker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99595547974-s0jnu9t9if41v9i8gukvgnnlgks6ll07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCA7wQt-2a91j0fPMRIngrQMI5KtZe4sI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
