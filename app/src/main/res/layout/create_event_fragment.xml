@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10sp"
-    android:background="@color/colorBeautyBlack">
+    android:background="@color/colorWhite">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:text="@string/set_event_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="20sp"
                 android:layout_marginBottom="10dp" />
 
@@ -41,7 +41,7 @@
                 android:id="@+id/set_time"
                 android:layout_below="@+id/event_name"
                 android:text="@string/set_event_time"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -50,7 +50,6 @@
             <TimePicker
                 android:id="@+id/TimePicker"
                 android:layout_below="@+id/set_time"
-                android:background="@color/colorPrimary"
                 android:layout_centerInParent="true"
                 android:keepScreenOn="true"
                 android:longClickable="true"
@@ -60,8 +59,21 @@
                 android:timePickerMode="spinner"/>
 
             <Button
-                android:id="@+id/create_event"
+                android:text="Set place on map"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/TimePicker"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="15sp"
+                android:padding="10dp"
+                android:id="@+id/set_place_map" />
+
+            <Button
+                android:id="@+id/create_event"
+                android:layout_below="@+id/set_place_map"
                 android:text="@string/button_create_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.flashpoint.ticktocker;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -28,24 +30,32 @@ public class CreateEventFragment extends Fragment {
     private Button event_create;
     private DatabaseReference database;
     private EventInfo eventInfo;
+    private Button set_place;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.create_event_fragment, container, false);
+
+
+        //opening google maps
+
+
+        //pushing info to firebase
         event = (EditText) view.findViewById(R.id.event_name);
         time = (TimePicker) view.findViewById(R.id.TimePicker);
         event_create = (Button) view.findViewById(R.id.create_event);
         time.setIs24HourView(true);
         database = FirebaseDatabase.getInstance().getReference();
+        eventInfo = new EventInfo();
         event_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 eventInfo.setEvent(event.getText().toString().trim());
                 eventInfo.setHour(time.getHour());
                 eventInfo.setMinute(time.getMinute());
-                database.child("test_two").setValue(eventInfo);
+                database.child("test").setValue(eventInfo);
                 /*database.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,8 +70,8 @@ public class CreateEventFragment extends Fragment {
                 });*/
             }
         });
-        //TODO
-        return view;
 
+
+        return view;
     }
 }
