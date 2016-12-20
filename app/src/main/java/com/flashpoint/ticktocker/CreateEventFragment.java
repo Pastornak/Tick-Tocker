@@ -40,7 +40,16 @@ public class CreateEventFragment extends Fragment {
 
 
         //opening google maps
+        set_place = (Button) view.findViewById(R.id.set_place_map);
+        set_place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                FragmentActivity activity = getActivity();
+                MainActivity mainActivity = (MainActivity) activity;
+                mainActivity.showFragment(new GoogleMapFragment());
+            }
+        });
 
         //pushing info to firebase
         event = (EditText) view.findViewById(R.id.event_name);
