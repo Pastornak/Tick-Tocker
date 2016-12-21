@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:padding="10sp"
-    android:background="@color/colorBeautyBlack">
+    android:background="@color/colorWhite">
 
     <ScrollView
          android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                  android:text="@string/list_of_events"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
-                 android:textColor="@color/colorWhite"
+                 android:textColor="@color/colorBlack"
                  android:textSize="20sp"
                  android:layout_marginBottom="10dp" />
 
