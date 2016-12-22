@@ -44,9 +44,10 @@ public class CreateEventFragment extends Fragment {
         set_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentActivity activity = getActivity();
                 MainActivity mainActivity = (MainActivity) activity;
-                //mainActivity.showFragment(new MapFragmentTest());
+                mainActivity.showFragment(new GoogleMapFragment());
             }
         });
 
