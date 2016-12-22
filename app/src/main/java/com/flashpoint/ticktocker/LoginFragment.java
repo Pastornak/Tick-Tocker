@@ -38,10 +38,12 @@ public class LoginFragment extends Fragment {
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         firebaseAuth = FirebaseAuth.getInstance();
+        final Bundle bundle = new Bundle();
         LoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String email = editTextEmail.getText().toString().trim();
+                bundle.putString("user", email);
                 final String password = editTextPassword.getText().toString().trim();
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener(getActivity(), new OnSuccessListener<AuthResult>() {
@@ -49,7 +51,7 @@ public class LoginFragment extends Fragment {
                             public void onSuccess(AuthResult authResult) {
                                 FragmentActivity activity = getActivity();
                                 MainActivity mainActivity = (MainActivity) activity;
-                                mainActivity.showFragment(new CalendarFragment());
+                                mainActivity.showFragment(new CreateEventFragment());
                             }
                         })
                         .addOnFailureListener(getActivity(), new OnFailureListener() {
@@ -66,6 +68,7 @@ public class LoginFragment extends Fragment {
                         });
             }
         });
+        setArguments(bundle);
         return view;
     }
 }

@@ -4,6 +4,7 @@ public class EventInfo {
     private String event;
     private int hour;
     private int minute;
+    //private String user;
 
     public EventInfo(){
 
@@ -32,4 +33,14 @@ public class EventInfo {
     public void setMinute(int a){
         this.minute = a;
     }
+
+   /* public String getUser()
+    {
+        return user;
+    }
+
+    public void setUser(String a)
+    {
+        this.user = a;
+    }*/
 }
