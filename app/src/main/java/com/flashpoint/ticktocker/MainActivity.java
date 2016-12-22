@@ -7,9 +7,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.auth.AuthResult;
+
+import java.io.StringBufferInputStream;
+
 public class MainActivity extends AppCompatActivity {
 
     private Fragment currentFragment;
+    private String user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,5 +34,30 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-   
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (!(currentFragment instanceof CalendarFragment)) {
+            goBack();
+        }
+    }
+
+
+    public void setUser(String a) {
+        a = a.replace(".", "");
+        user = a;
+    }
+
+    public String getUser() {
+        return user;
+    }
 }
+
+
+
+

@@ -1,10 +1,12 @@
 package com.flashpoint.ticktocker;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class EventInfo {
     private String event;
     private int hour;
     private int minute;
-    //private String user;
+    private LatLng location;
 
     public EventInfo(){
 
@@ -34,13 +36,14 @@ public class EventInfo {
         this.minute = a;
     }
 
-   /* public String getUser()
+    public LatLng getLocation()
     {
-        return user;
+        return location;
     }
 
-    public void setUser(String a)
+    public void setLocation(LatLng a)
     {
-        this.user = a;
-    }*/
+        location = a;
+    }
+
 }
