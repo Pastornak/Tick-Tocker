@@ -34,14 +34,30 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void setUser(String a)
-    {
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (!(currentFragment instanceof CalendarFragment)) {
+            goBack();
+        }
+    }
+
+
+    public void setUser(String a) {
         a = a.replace(".", "");
         user = a;
     }
 
-    public String getUser()
-    {
+    public String getUser() {
         return user;
     }
 }
+
+
+
+
