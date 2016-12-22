@@ -1,9 +1,5 @@
 package com.flashpoint.ticktocker;
 
-/**
- * Created by vlad on 18.12.16.
- */
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -45,11 +41,7 @@ public class ShowEventFragment extends Fragment {
                     String value = dataSnapshot.child("test").getValue(String.class);
                     Log.d(TAG, "Value is: " + value);
                 }
-*/
-
-
-
-        //});
+            });*/
         return view;
     }
 
