@@ -29,5 +29,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-   
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (!(currentFragment instanceof CalendarFragment)) {
+            goBack();
+        }
+    }
 }
