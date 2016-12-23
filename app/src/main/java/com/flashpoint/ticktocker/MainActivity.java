@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment currentFragment;
     private String user;
+    private int day;
+    private int month;
+    private int year;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,36 @@ public class MainActivity extends AppCompatActivity {
 
     public String getUser() {
         return user;
+    }
+
+    public void setDay(int a)
+    {
+        day = a;
+    }
+
+    public int getDay()
+    {
+        return day;
+    }
+
+    public void setMonth(int a)
+    {
+        month = a;
+    }
+
+    public int getMonth()
+    {
+        return month;
+    }
+
+    public void setYear(int a)
+    {
+        year = a;
+    }
+
+    public int getYear()
+    {
+        return year;
     }
 }
 

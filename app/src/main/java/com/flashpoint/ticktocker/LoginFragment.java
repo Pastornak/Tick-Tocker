@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
                             public void onSuccess(AuthResult authResult) {
                                 FragmentActivity activity = getActivity();
                                 MainActivity mainActivity = (MainActivity) activity;
-                                mainActivity.setUser(authResult.getUser().toString().trim());
+                                mainActivity.setUser(email);
                                 mainActivity.showFragment(new CalendarFragment());
                             }
                         })

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +71,11 @@ public class CreateEventFragment extends Fragment {
                 eventInfo.setEvent(event.getText().toString().trim());
                 eventInfo.setHour(time.getHour());
                 eventInfo.setMinute(time.getMinute());
-                database.child(mainActivity.getUser()).child(timePad).setValue(eventInfo);
+                database.child(mainActivity.getUser()).child("day"+"_"+mainActivity.getDay()+"_"
+                        +mainActivity.getMonth()+"_"+mainActivity.getYear())
+                        .child(timePad).setValue(eventInfo);
+                mainActivity.showFragment(new ShowEventFragment());
+                Toast.makeText(getContext(), "Event created", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
