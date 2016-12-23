@@ -4,7 +4,6 @@ public class EventInfo {
     private String event;
     private int hour;
     private int minute;
-
     public EventInfo(){
 
     }
