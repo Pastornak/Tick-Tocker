@@ -71,6 +71,8 @@ public class CreateEventFragment extends Fragment {
                 eventInfo.setEvent(event.getText().toString().trim());
                 eventInfo.setHour(time.getHour());
                 eventInfo.setMinute(time.getMinute());
+                eventInfo.location = mainActivity.getPosition();
+                //eventInfo.setLocation(mainActivity.getPosition());
                 database.child(mainActivity.getUser()).child("day"+"_"+mainActivity.getDay()+"_"
                         +mainActivity.getMonth()+"_"+mainActivity.getYear())
                         .child(timePad).setValue(eventInfo);
