@@ -1,5 +1,7 @@
 package com.flashpoint.ticktocker;
 
+import android.support.v4.app.FragmentActivity;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class EventInfo {
@@ -40,4 +42,5 @@ public class EventInfo {
     {
         location = a;
     }
+
 }

@@ -1,9 +1,13 @@
 package com.flashpoint.ticktocker;
 
+import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,17 +18,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 
-public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks {
+public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        ActivityCompat.OnRequestPermissionsResultCallback{
 
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
@@ -62,8 +69,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(getContext(), "hey", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getContext(), "hey", Toast.LENGTH_SHORT).show();
+        FragmentActivity activity = getActivity();
+        MainActivity mainActivity = (MainActivity) activity;
+        mainActivity.showFragment(new CreateEventFragment());
         return super.onOptionsItemSelected(item);
     }
 
@@ -129,6 +138,16 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            googleMap.setMyLocationEnabled(true);
+    }
+         else {
+            // Show rationale and request permission.
+        }
+
+
+
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -136,6 +155,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                 return true;
             }
         });
+
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -148,7 +168,12 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                     currentMarker.remove();
                 }
                 currentMarker = googleMap.addMarker(options);
+                FragmentActivity activity = getActivity();
+                MainActivity mainActivity = (MainActivity) activity;
+                mainActivity.setPosition(currentMarker.getPosition());
             }
         });
     }
+
+
 }

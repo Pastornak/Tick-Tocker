@@ -7,14 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.auth.AuthResult;
-
-import java.io.StringBufferInputStream;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment currentFragment;
     private String user;
+    private int day;
+    private int month;
+    private int year;
+    private LatLng position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +57,38 @@ public class MainActivity extends AppCompatActivity {
 
     public String getUser() {
         return user;
+    }
+
+    public void setDay(int a) {
+        day = a;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setMonth(int a) {
+        month = a;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setYear(int a) {
+        year = a;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public LatLng getPosition() {
+        return position;
+    }
+
+    public void setPosition(LatLng a) {
+        position = a;
     }
 }
 
