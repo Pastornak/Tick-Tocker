@@ -34,7 +34,13 @@ public class CreateEventFragment extends Fragment {
     private EventInfo eventInfo;
     private Button set_place;
     private long currentTime;
-    private String timePad;
+    private String timeStamp;
+
+    private Long hour;
+    private Long minute;
+
+    private int a;
+    private int b;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,16 +72,16 @@ public class CreateEventFragment extends Fragment {
                 FragmentActivity activity = getActivity();
                 MainActivity mainActivity = (MainActivity) activity;
                 currentTime = System.currentTimeMillis();
-                timePad = String.valueOf(currentTime);
+                timeStamp = String.valueOf(currentTime);
                 //currentTime = currentTime.replace("/", "");
                 eventInfo.setEvent(event.getText().toString().trim());
-                eventInfo.setHour(time.getHour());
-                eventInfo.setMinute(time.getMinute());
+                eventInfo.setHour(Long.valueOf(time.getHour()));
+                eventInfo.setMinute(Long.valueOf(time.getMinute()));
                 eventInfo.location = mainActivity.getPosition();
                 //eventInfo.setLocation(mainActivity.getPosition());
                 database.child(mainActivity.getUser()).child("day"+"_"+mainActivity.getDay()+"_"
                         +mainActivity.getMonth()+"_"+mainActivity.getYear())
-                        .child(timePad).setValue(eventInfo);
+                        .child(timeStamp).setValue(eventInfo);
                 mainActivity.showFragment(new ShowEventFragment());
                 Toast.makeText(getContext(), "Event created", Toast.LENGTH_SHORT).show();
             }

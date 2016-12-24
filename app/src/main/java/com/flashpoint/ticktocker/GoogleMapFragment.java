@@ -72,7 +72,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         //Toast.makeText(getContext(), "hey", Toast.LENGTH_SHORT).show();
         FragmentActivity activity = getActivity();
         MainActivity mainActivity = (MainActivity) activity;
-        mainActivity.showFragment(new CreateEventFragment());
+        mainActivity.goBack();
+        //mainActivity.showFragment(new CreateEventFragment());
         return super.onOptionsItemSelected(item);
     }
 
