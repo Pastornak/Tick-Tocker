@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,8 +43,16 @@ public class LoginFragment extends Fragment {
         LoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = editTextEmail.getText().toString().trim();
-                final String password = editTextPassword.getText().toString().trim();
+                Editable emailEditable = editTextEmail.getText();
+                Editable passwordEditable = editTextPassword.getText();
+
+                if (TextUtils.isEmpty(emailEditable) || TextUtils.isEmpty(passwordEditable)) {
+                    showInvalidCredentialsDialog();
+                    return;
+                }
+
+                final String email = emailEditable.toString().trim();
+                final String password = passwordEditable.toString().trim();
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener(getActivity(), new OnSuccessListener<AuthResult>() {
                             @Override
@@ -56,18 +66,21 @@ public class LoginFragment extends Fragment {
                         .addOnFailureListener(getActivity(), new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                                        .setTitle("Invalid credentials")
-                                        .setMessage("Please check your email and password")
-                                        .setPositiveButton(android.R.string.ok, null);
-
-                                builder.show();
-
+                                showInvalidCredentialsDialog();
                             }
                         });
             }
         });
         return view;
+    }
+
+    private void showInvalidCredentialsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle("Invalid credentials")
+                .setMessage("Please check your email and password")
+                .setPositiveButton(android.R.string.ok, null);
+
+        builder.show();
     }
 }
 
