@@ -1,13 +1,18 @@
 package com.flashpoint.ticktocker;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
@@ -16,18 +21,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShowEventFragment extends Fragment {
 
-    //private DatabaseReference database;
+    private RecyclerView recyclerView;
+    private EventAdapter eventAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.show_event_fragment, container, false);
+    }
 
-        View view = inflater.inflate(R.layout.show_event_fragment, container, false);
-        Button CreateNewEventButton = (Button) view.findViewById(R.id.create_new_event);
-        CreateNewEventButton.setOnClickListener(new OnClickListener() {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton createNewEventButton = (ImageButton) view.findViewById(R.id.create_new_event);
+        createNewEventButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 FragmentActivity activity = getActivity();
@@ -35,14 +51,104 @@ public class ShowEventFragment extends Fragment {
                 mainActivity.showFragment(new CreateEventFragment());
             }
         });
-           /* database.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String value = dataSnapshot.child("test").getValue(String.class);
-                    Log.d(TAG, "Value is: " + value);
-                }
-            });*/
-        return view;
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.events);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        eventAdapter = new EventAdapter();
+        recyclerView.setAdapter(eventAdapter);
+
+        /**
+         * TODO remove this once firebase data can be displayed.
+         */
+        EventInfo eventInfo1 = new EventInfo();
+        eventInfo1.setEvent("Go shopping");
+
+        EventInfo eventInfo2 = new EventInfo();
+        eventInfo2.setEvent("Visit dentist");
+
+        EventInfo eventInfo3 = new EventInfo();
+        eventInfo3.setEvent("Check out new band album");
+
+        eventAdapter.events.add(eventInfo1);
+        eventAdapter.events.add(eventInfo2);
+        eventAdapter.events.add(eventInfo3);
+
+        eventAdapter.notifyDataSetChanged();
     }
 
+    private void showEvents() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseReference dayReference = database
+                .child(mainActivity.getUser())
+                .child("day" + "_" + mainActivity.getDay() + "_" + mainActivity.getMonth() + "_" + mainActivity.getYear());
+
+        dayReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<EventInfo> dayEvents = new ArrayList<EventInfo>();
+
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                    EventInfo eventInfo = (EventInfo) eventSnapshot.getValue();
+
+                    dayEvents.add(eventInfo);
+                }
+
+                eventAdapter.events.clear();
+                eventAdapter.events.addAll(dayEvents);
+                eventAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private class EventViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView title;
+        private TextView date;
+
+        public EventViewHolder(View itemView) {
+            super(itemView);
+
+            title = (TextView) itemView.findViewById(R.id.event_title);
+            date = (TextView)itemView.findViewById(R.id.event_date);
+        }
+    }
+
+    private class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
+
+        private List<EventInfo> events = new ArrayList<>();
+
+        @Override
+        public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(getContext()).inflate(R.layout.event_info, parent, false);
+
+            EventViewHolder holder = new EventViewHolder(itemView);
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(EventViewHolder holder, int position) {
+            EventInfo eventInfo = events.get(position);
+
+            holder.title.setText(eventInfo.getEvent());
+            //holder.date.setText(...);
+        }
+
+        @Override
+        public int getItemCount() {
+            return events.size();
+        }
+    }
 }
