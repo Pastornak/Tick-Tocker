@@ -7,7 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class MainActivity extends AppCompatActivity {
+
+    private Fragment currentFragment;
+    private String user;
+    private int day;
+    private int month;
+    private int year;
+    private LatLng position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -18,9 +27,71 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showFragment(Fragment fragment) {
+        currentFragment = fragment;
+
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (!(currentFragment instanceof CalendarFragment)) {
+            goBack();
+        }
+    }
+
+
+    public void setUser(String a) {
+        a = a.replace(".", "");
+        user = a;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setDay(int a) {
+        day = a;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setMonth(int a) {
+        month = a;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setYear(int a) {
+        year = a;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public LatLng getPosition() {
+        return position;
+    }
+
+    public void setPosition(LatLng a) {
+        position = a;
+    }
 }
+
+
+
+

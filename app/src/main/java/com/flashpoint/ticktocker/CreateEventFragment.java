@@ -1,6 +1,7 @@
 package com.flashpoint.ticktocker;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,8 @@ public class CreateEventFragment extends Fragment {
     private DatabaseReference database;
     private EventInfo eventInfo;
     private Button set_place;
+    private long currentTime;
+    private String timePad;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,9 +42,16 @@ public class CreateEventFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.create_event_fragment, container, false);
 
-
         //opening google maps
-
+        set_place = (Button) view.findViewById(R.id.set_place_map);
+        set_place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentActivity activity = getActivity();
+                MainActivity mainActivity = (MainActivity) activity;
+                mainActivity.showFragment(new GoogleMapFragment());
+            }
+        });
 
         //pushing info to firebase
         event = (EditText) view.findViewById(R.id.event_name);
@@ -52,26 +63,23 @@ public class CreateEventFragment extends Fragment {
         event_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentActivity activity = getActivity();
+                MainActivity mainActivity = (MainActivity) activity;
+                currentTime = System.currentTimeMillis();
+                timePad = String.valueOf(currentTime);
+                //currentTime = currentTime.replace("/", "");
                 eventInfo.setEvent(event.getText().toString().trim());
                 eventInfo.setHour(time.getHour());
                 eventInfo.setMinute(time.getMinute());
-                database.child("test").setValue(eventInfo);
-                /*database.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String value = dataSnapshot.child("test").getValue(String.class);
-                        Log.d(TAG, "Value is: " + value);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "Failed to read value.");
-                    }
-                });*/
+                eventInfo.location = mainActivity.getPosition();
+                //eventInfo.setLocation(mainActivity.getPosition());
+                database.child(mainActivity.getUser()).child("day"+"_"+mainActivity.getDay()+"_"
+                        +mainActivity.getMonth()+"_"+mainActivity.getYear())
+                        .child(timePad).setValue(eventInfo);
+                mainActivity.showFragment(new ShowEventFragment());
+                Toast.makeText(getContext(), "Event created", Toast.LENGTH_SHORT).show();
             }
         });
-
-
         return view;
     }
 }

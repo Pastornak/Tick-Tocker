@@ -3,4 +3,6 @@
     <string name="set_event_name">Set the title of the event</string>
     <string name="set_event_time">Set the time of the event</string>
     <string name="button_create_event">Create an event</string>
+    <string name="list_of_events">List of events</string>
+    <string name="button_create_new_event">Create new event</string>
 </resources>
