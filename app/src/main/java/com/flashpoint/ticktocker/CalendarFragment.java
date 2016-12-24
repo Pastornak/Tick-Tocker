@@ -56,7 +56,7 @@ public class CalendarFragment extends Fragment {
                 mainActivity.setMonth(month);
                 mainActivity.setDay(day);
                 mainActivity.setYear(year);
-                mainActivity.showFragment(new CreateEventFragment());
+                mainActivity.showFragment(new ShowEventFragment());
             }
 
         });
