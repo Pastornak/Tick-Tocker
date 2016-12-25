@@ -139,7 +139,7 @@ public class ChosenEventMapFragment extends SupportMapFragment implements OnMapR
         Marker marker = googleMap.addMarker(new MarkerOptions()
                 .position(eventInfo.location)
                 .title(eventInfo.getEvent())
-                .snippet(eventInfo.getHour().toString()+eventInfo.getMinute().toString()));
+                .snippet(eventInfo.getHour().toString()+":"+eventInfo.getMinute().toString()));
         marker.showInfoWindow();
     }
 
