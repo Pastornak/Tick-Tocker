@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -64,11 +65,12 @@ public class ShowEventFragment extends Fragment {
 
         eventAdapter = new EventAdapter();
         recyclerView.setAdapter(eventAdapter);
-
-        /**
-         * TODO remove this once firebase data can be displayed.
-         */
         showEvents();
+
+                /**
+                 * TODO remove this once firebase data can be displayed.
+                 */
+
         /*EventInfo eventInfo1 = new EventInfo();
         eventInfo1.setEvent("Go shopping");
 
@@ -143,6 +145,7 @@ public class ShowEventFragment extends Fragment {
         private TextView title;
         private TextView date;
 
+
         public EventViewHolder(View itemView) {
             super(itemView);
 
@@ -166,7 +169,17 @@ public class ShowEventFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(EventViewHolder holder, int position) {
-            EventInfo eventInfo = events.get(position);
+            final EventInfo eventInfo = events.get(position);
+            holder.itemView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChosenEventMapFragment fragment = new ChosenEventMapFragment();
+                    fragment.setEventInfo(eventInfo);
+                    FragmentActivity activity = getActivity();
+                    MainActivity mainActivity = (MainActivity) activity;
+                    mainActivity.showFragment(fragment);
+                }
+            });
 
             holder.title.setText(eventInfo.getEvent());
             //holder.date.setText(...);
