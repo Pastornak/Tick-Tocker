@@ -6,8 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class EventInfo {
     private String event;
-    private int hour;
-    private int minute;
+    private Long hour;
+    private Long minute;
     public LatLng location;
 
     public EventInfo(){
@@ -22,25 +22,25 @@ public class EventInfo {
         this.event = a;
     }
 
-    public int getHour(){
+    public Long getHour(){
         return hour;
     }
 
-    public void setHour(int a){
+    public void setHour(Long a){
         this.hour = a;
     }
 
-    public int getMinute(){
+    public Long getMinute(){
         return minute;
     }
 
-    public void setMinute(int a){
+    public void setMinute(Long a){
         this.minute = a;
     }
 
     public void setLocation(LatLng a)
     {
-        location = a;
+        this.location = a;
     }
 
 }

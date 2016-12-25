@@ -5,12 +5,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -19,14 +23,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
 
 import java.io.IOException;
+import java.util.HashMap;
 
-public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+public class ChosenEventMapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
@@ -38,7 +45,14 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             GoogleMap.MAP_TYPE_TERRAIN,
             GoogleMap.MAP_TYPE_NONE};
 
+    private EventInfo eventInfo;
+
     private Marker currentMarker;
+
+
+    public void setEventInfo(EventInfo a){
+        this.eventInfo = a;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -118,66 +132,16 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 //        getMap().getUiSettings().setZoomControlsEnabled( true );
 //    }
 
-    private String getAddressFromLatLng(LatLng latLng) {
-        //if (location != null || !location.equals("")
-        Geocoder geocoder = new Geocoder(getActivity());
-
-        String address = "";
-        try {
-            if (geocoder
-                    .getFromLocation(latLng.latitude, latLng.longitude, 1)
-                    .get(0).getAddressLine(0) != null)
-                address = geocoder
-                    .getFromLocation(latLng.latitude, latLng.longitude, 1)
-                    .get(0).getAddressLine(0);
-            else
-                address = "Cannot get address";
-        } catch (IOException e) {
-        }
-
-        return address;
-    }
-
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            googleMap.setMyLocationEnabled(true);
+        //googleMap.addMarker(new MarkerOptions().position(eventInfo.location).title(eventInfo.getEvent()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(eventInfo.location));
+        Marker marker = googleMap.addMarker(new MarkerOptions()
+                .position(eventInfo.location)
+                .title(eventInfo.getEvent())
+                .snippet(eventInfo.getHour().toString()+":"+eventInfo.getMinute().toString()));
+        marker.showInfoWindow();
     }
-         else {
-            // Show rationale and request permission.
-        }
-
-
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                marker.showInfoWindow();
-                return true;
-            }
-        });
-
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                MarkerOptions options = new MarkerOptions().position(latLng);
-                if (getAddressFromLatLng(latLng) != null)
-                    options.title(getAddressFromLatLng(latLng));
-
-                options.icon(BitmapDescriptorFactory.defaultMarker());
-
-                if (currentMarker != null) {
-                    currentMarker.remove();
-                }
-                currentMarker = googleMap.addMarker(options);
-                FragmentActivity activity = getActivity();
-                MainActivity mainActivity = (MainActivity) activity;
-                mainActivity.setPosition(currentMarker.getPosition());
-            }
-        });
-    }
-
 
 
 
