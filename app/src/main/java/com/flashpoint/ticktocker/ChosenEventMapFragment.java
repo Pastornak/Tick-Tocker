@@ -71,7 +71,7 @@ public class ChosenEventMapFragment extends SupportMapFragment implements OnMapR
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.map_menu, menu);
+        inflater.inflate(R.menu.map_event_menu, menu);
 
         getActivity().setTitle("Map");
     }
@@ -135,7 +135,7 @@ public class ChosenEventMapFragment extends SupportMapFragment implements OnMapR
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         //googleMap.addMarker(new MarkerOptions().position(eventInfo.location).title(eventInfo.getEvent()));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(eventInfo.location));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventInfo.location, 13));
         Marker marker = googleMap.addMarker(new MarkerOptions()
                 .position(eventInfo.location)
                 .title(eventInfo.getEvent())

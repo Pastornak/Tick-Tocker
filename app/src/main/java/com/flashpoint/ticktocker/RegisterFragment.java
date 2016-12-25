@@ -33,6 +33,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.registr_fragment, container, false);
+        getActivity().setTitle("Registration");
         emailEditText = (EditText) view.findViewById(R.id.editTextEmail);
         mAuth = FirebaseAuth.getInstance();
         passwordEditText = (EditText) view.findViewById(R.id.editTextPassword);

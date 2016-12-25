@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.login_fragment, container, false);
+        getActivity().setTitle("Authorization");
         RegistrButtom = (Button) view.findViewById(R.id.buttonRegist);
         LoginButton = (Button) view.findViewById(R.id.buttonlogin);
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);

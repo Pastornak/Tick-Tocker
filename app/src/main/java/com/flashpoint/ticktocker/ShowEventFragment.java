@@ -40,6 +40,7 @@ public class ShowEventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Events");
         return inflater.inflate(R.layout.show_event_fragment, container, false);
     }
 

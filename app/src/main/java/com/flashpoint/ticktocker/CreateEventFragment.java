@@ -36,17 +36,12 @@ public class CreateEventFragment extends Fragment {
     private long currentTime;
     private String timeStamp;
 
-    private Long hour;
-    private Long minute;
-
-    private int a;
-    private int b;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.create_event_fragment, container, false);
+        getActivity().setTitle("New event");
 
         //opening google maps
         set_place = (Button) view.findViewById(R.id.set_place_map);
@@ -73,7 +68,6 @@ public class CreateEventFragment extends Fragment {
                 MainActivity mainActivity = (MainActivity) activity;
                 currentTime = System.currentTimeMillis();
                 timeStamp = String.valueOf(currentTime);
-                //currentTime = currentTime.replace("/", "");
                 eventInfo.setEvent(event.getText().toString().trim());
                 eventInfo.setHour(Long.valueOf(time.getHour()));
                 eventInfo.setMinute(Long.valueOf(time.getMinute()));
