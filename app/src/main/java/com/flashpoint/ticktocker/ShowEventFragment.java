@@ -169,17 +169,20 @@ public class ShowEventFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(EventViewHolder holder, int position) {
-            final EventInfo eventInfo = events.get(position);
-            holder.itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChosenEventMapFragment fragment = new ChosenEventMapFragment();
-                    fragment.setEventInfo(eventInfo);
-                    FragmentActivity activity = getActivity();
-                    MainActivity mainActivity = (MainActivity) activity;
-                    mainActivity.showFragment(fragment);
-                }
-            });
+
+            final EventInfo eventInfo = events.get(position); 
+            holder.itemView.setOnClickListener(new OnClickListener() { 
+                
+        @Override 
+	    public void onClick(View view) { 
+		    ChosenEventMapFragment fragment = new ChosenEventMapFragment(); 
+		    fragment.setEventInfo(eventInfo); 
+    		FragmentActivity activity = getActivity(); 
+	    	MainActivity mainActivity = (MainActivity) activity; 
+		    mainActivity.showFragment(fragment); 
+	        } 
+        }); 
+
 
             holder.title.setText(eventInfo.getEvent());
             //holder.date.setText(...);
