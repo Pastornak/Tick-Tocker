@@ -29,6 +29,7 @@ public class LoginFragment extends Fragment {
     private EditText editTextPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private Button RegistrButtom;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -36,10 +37,19 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.login_fragment, container, false);
+        RegistrButtom = (Button) view.findViewById(R.id.buttonRegist);
         LoginButton = (Button) view.findViewById(R.id.buttonlogin);
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         firebaseAuth = FirebaseAuth.getInstance();
+        RegistrButtom.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentActivity activity = getActivity();
+                MainActivity mainActivity = (MainActivity) activity;
+                mainActivity.showFragment(new RegisterFragment());
+            }
+        });
         LoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +83,7 @@ public class LoginFragment extends Fragment {
         });
         return view;
     }
+
 
     private void showInvalidCredentialsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
