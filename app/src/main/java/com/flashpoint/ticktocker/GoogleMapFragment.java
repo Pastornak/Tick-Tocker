@@ -119,20 +119,14 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 //    }
 
     private String getAddressFromLatLng(LatLng latLng) {
-        //if (location != null || !location.equals("")
-        Geocoder geocoder = new Geocoder(getActivity());
+        Geocoder geocoder = new Geocoder( getActivity() );
 
         String address = "";
         try {
-            if (geocoder
-                    .getFromLocation(latLng.latitude, latLng.longitude, 1)
-                    .get(0).getAddressLine(0) != null)
-                address = geocoder
-                    .getFromLocation(latLng.latitude, latLng.longitude, 1)
-                    .get(0).getAddressLine(0);
-            else
-                address = "Cannot get address";
-        } catch (IOException e) {
+            address = geocoder
+                    .getFromLocation( latLng.latitude, latLng.longitude, 1 )
+                    .get( 0 ).getAddressLine( 0 );
+        } catch (IOException e ) {
         }
 
         return address;
@@ -147,6 +141,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
          else {
             // Show rationale and request permission.
         }
+        LatLng SoftServeHQ = new LatLng(49.822703562584834, 23.985046260058883);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoftServeHQ, 16));
 
 
 
@@ -162,8 +158,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             @Override
             public void onMapClick(LatLng latLng) {
                 MarkerOptions options = new MarkerOptions().position(latLng);
-                if (getAddressFromLatLng(latLng) != null)
                     options.title(getAddressFromLatLng(latLng));
+
 
                 options.icon(BitmapDescriptorFactory.defaultMarker());
 
